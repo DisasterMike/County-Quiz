@@ -27,6 +27,8 @@ body {
   border-radius: 12px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding-top: 10px;
+
+  position: relative;
 }
 
 h1{
@@ -60,7 +62,7 @@ input {
   border-radius: 5px;
 }
 
-button {
+.answer-button {
   font-weight: 800;
   letter-spacing: 2px;
   font-size: large;
@@ -74,12 +76,30 @@ button {
   cursor: pointer;
 }
 
+.hint-button{
+  position: absolute;
+  right: 15px;
+  top: 15px;
+}
+
+.hint-button button{
+  background: #ff0000;
+  color: white;
+  border: none;
+  padding: 8px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+.hint-button button:hover{
+  background: #781111;
+}
+
 .horizontal-container {
   display: flex;
   justify-content: space-between;
 }
 
-button:hover {
+.answer-button:hover {
   background-color: #ffd500;
 }
 

@@ -6,33 +6,48 @@
 <body id="app">
   <div class="question-container">
     <h1>Name the capitals!</h1>
-    <form class="container" action="/submit" method="post">
-      <div class="horizontal-container">
-        <h3>
-          Total Score:
-          <span id="score">
-            <%= locals.totalScore ? totalScore : "0" %>
-          </span>
-        </h3>
-        <!-- TODO: add a hint button that adds the first letter to the answer box -->
+    <p class="answer" style="display: none;"><%= question.capital %></p>
+    <div class="container">
+      <div class="hint-button">
+        <form action="/hint" method="post">
+          <button>Hint</button>
+        </form>
       </div>
+      <form action="/submit" method="post">
+        <div class="horizontal-container">
+          <h3>
+            Correct Answers:
+            <span id="correct-answers">
+              <%= locals.totalCorrectAnswers ? totalCorrectAnswers : "0" %>
+            </span>
+          </h3>
+          <h3>
+            Hints remaining:
+            <span id="score">
+              <%= locals.hints ? hints : "0" %>
+            </span>
+          </h3>
+        </div>
 
-      <h2 id="countryName">
-        <%=question.country %>
-      </h2>
-      <div class="answer-container">
-        <input type="text" name="answer" id="userInput" placeholder="Enter the capital" autofocus autocomplete="off">
+        <h2 id="countryName">
+          <%=question.country %>
+        </h2>
+        <div class="answer-container">
+          <input type="text" name="answer" id="userInput" placeholder="Enter the capital" value="<%= locals.currentGuess ? currentGuess : "" %>" autofocus autocomplete="off" onfocus="this.setSelectionRange(this.value.length,this.value.length);">
 
-      </div>
-      <button type="submit">SUBMIT<% if(locals.wasCorrect){ %>
-        <span class="checkmark">✔</span>
-        <% } else { %>
-        <span class="cross" id="error">✖</span>
-        <% } %>
-      </button>
+        </div>
+        <button class="answer-button" type="submit">SUBMIT<% if(locals.wasCorrect){ %>
+          <span class="checkmark">✔</span>
+          <% } else if (locals.wasCorrect === false) { %>
+          <span class="cross" id="error">✖</span>
+          <% } %>
+        </button>
 
-    </form>
+      </form>
+    </div>
   </div>
+
+
 </body>
 
 </html>
