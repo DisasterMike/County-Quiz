@@ -4,32 +4,34 @@
 <%- include("partials/head.ejs") %>
 
 <body id="app">
-  <form class="container" action="/submit" method="post">
-    <div class="horizontal-container">
-      <h3>
-        Total Score:
-        <span id="score">
-          <%= locals.totalScore ? totalScore : "0" %>
-        </span>
-      </h3>
-      <!-- TODO: add a hint button that adds the first letter to the answer box -->
-    </div>
+  <div class="question-container">
+    <form class="container" action="/submit" method="post">
+      <div class="horizontal-container">
+        <h3>
+          Total Score:
+          <span id="score">
+            <%= locals.totalScore ? totalScore : "0" %>
+          </span>
+        </h3>
+        <!-- TODO: add a hint button that adds the first letter to the answer box -->
+      </div>
 
-    <h1 id="countryName">
-      <%=question.country %>
-    </h1>
-    <div class="answer-container">
-      <input type="text" name="answer" id="userInput" placeholder="Enter the capital" autofocus autocomplete="off">
+      <h1 id="countryName">
+        <%=question.country %>
+      </h1>
+      <div class="answer-container">
+        <input type="text" name="answer" id="userInput" placeholder="Enter the capital" autofocus autocomplete="off">
 
-    </div>
-    <button type="submit">SUBMIT<% if(locals.wasCorrect){ %>
-      <span class="checkmark">✔</span>
-      <% } else { %>
-      <span class="cross" id="error">✖</span>
-      <% } %>
-    </button>
+      </div>
+      <button type="submit">SUBMIT<% if(locals.wasCorrect){ %>
+        <span class="checkmark">✔</span>
+        <% } else { %>
+        <span class="cross" id="error">✖</span>
+        <% } %>
+      </button>
 
-  </form>
+    </form>
+  </div>
 </body>
 
 </html>

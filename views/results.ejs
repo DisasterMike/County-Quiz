@@ -5,7 +5,13 @@
 
 <body id="app">
   <div class="restart-container" style="height: 100vh;">
-    <a class="restart-button" href="/">Restart</a>
+    <div class="content-container">
+      <h3>Total score: <%= totalScore %></h3>
+      <h1 class="actual-answer">Sorry, the answer was <span><%= question.capital %></span></h1>
+      <div class="restart-button-div">
+        <a class="restart-button" href="/">Restart</a>
+      </div>
+    </div>
   </div>
 </body>
 

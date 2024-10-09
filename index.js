@@ -53,7 +53,8 @@ app.post("/submit", (req, res) => {
   else // if incorrect
   {
     res.render("results.ejs", {
-      totalScore: totalCorrect
+      totalScore: totalCorrect,
+      question: currentQuestion
     })
   }
 });
