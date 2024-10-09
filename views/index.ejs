@@ -5,6 +5,7 @@
 
 <body id="app">
   <div class="question-container">
+    <h1>Name the capitals!</h1>
     <form class="container" action="/submit" method="post">
       <div class="horizontal-container">
         <h3>
@@ -16,9 +17,9 @@
         <!-- TODO: add a hint button that adds the first letter to the answer box -->
       </div>
 
-      <h1 id="countryName">
+      <h2 id="countryName">
         <%=question.country %>
-      </h1>
+      </h2>
       <div class="answer-container">
         <input type="text" name="answer" id="userInput" placeholder="Enter the capital" autofocus autocomplete="off">
 
