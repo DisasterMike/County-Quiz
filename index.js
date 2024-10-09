@@ -1,14 +1,30 @@
 import express from "express";
 import bodyParser from "body-parser";
+import pg from "pg";
 
 const app = express();
 const port = 3000;
 
-let quiz = [
-  { country: "France", capital: "Paris" },
-  { country: "United Kingdom", capital: "London" },
-  { country: "United States of America", capital: "New York" },
-];
+const db = new pg.Client({
+  user: "postgres",
+  host: "localhost",
+  database: "world",
+  password: "OnePaulrus2Many",
+  port: 5432
+});
+
+db.connect();
+
+// Create quiz from database
+let quiz = [];
+db.query("SELECT * FROM capitals", (err, res) => {
+  if (err) {
+    console.error("Error executing query". err.stack);
+  }else{
+    quiz = res.rows;
+  }
+  db.end();
+});
 
 let totalCorrect = 0;
 
@@ -20,8 +36,8 @@ let currentQuestion = {};
 
 // GET home page
 app.get("/", async (req, res) => {
-  totalCorrect = 0;
-  await nextQuestion();
+  totalCorrect = 0; // Reset correct count when reloading the site
+  await setNextQuestion();
   console.log(currentQuestion);
   res.render("index.ejs", { question: currentQuestion });
 });
@@ -29,22 +45,32 @@ app.get("/", async (req, res) => {
 // POST a new post
 app.post("/submit", (req, res) => {
   let answer = req.body.answer.trim();
-  let isCorrect = false;
-  if (currentQuestion.capital.toLowerCase() === answer.toLowerCase()) {
-    totalCorrect++;
-    console.log(totalCorrect);
-    isCorrect = true;
-  }
 
-  nextQuestion();
-  res.render("index.ejs", {
-    question: currentQuestion,
-    wasCorrect: isCorrect,
-    totalScore: totalCorrect,
-  });
+  // If correct
+  if (currentQuestion.capital.toLowerCase() === answer.toLowerCase()) {
+    moveToNextQuestion(res);
+  }
+  else // if incorrect
+  {
+    res.render("results.ejs", {
+      totalScore: totalCorrect
+    })
+  }
 });
 
-async function nextQuestion() {
+function moveToNextQuestion(res) {
+  totalCorrect++;
+  console.log(totalCorrect);
+
+  setNextQuestion();
+  res.render("index.ejs", {
+    question: currentQuestion,
+    wasCorrect: true,
+    totalScore: totalCorrect,
+  });
+}
+
+async function setNextQuestion() {
   const randomCountry = quiz[Math.floor(Math.random() * quiz.length)];
 
   currentQuestion = randomCountry;
